@@ -11,10 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'UsersDataController@index')->name('users');
+
+
+Route::get('/users',"UsersDataController@index");
 
 Route::get('/app', function () {
     return view('welcome in my app');
 });
+
+Auth::routes();
+Route::resource('users', 'UsersDataController');
+Route::get('/home', 'HomeController@index')->name('home');

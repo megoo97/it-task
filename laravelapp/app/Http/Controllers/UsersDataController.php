@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
+use Auth;
 
 class UsersDataController extends Controller
 {
@@ -13,7 +15,8 @@ class UsersDataController extends Controller
      */
     public function index()
     {
-        //
+        $users =  User::all();
+        return view('users.index')->with('users',$users);
     }
 
     /**
@@ -23,7 +26,8 @@ class UsersDataController extends Controller
      */
     public function create()
     {
-        //
+      return view('users.create');
+
     }
 
     /**
@@ -34,7 +38,18 @@ class UsersDataController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $this->validate($request,[
+      'name' => 'required',
+      'email' => 'required',
+      'password' => 'required|string|min:6|confirmed',
+
+      ]);
+      $user = new user;
+      $user->name = $request->input('name');
+      $user->email = $request->input('email');
+      $user->password = $request->input('password');
+      $user->save();
+      return redirect('/users')->with('success', 'User Created successfully');
     }
 
     /**
@@ -45,7 +60,8 @@ class UsersDataController extends Controller
      */
     public function show($id)
     {
-        //
+      $users = User::find($id);
+      return view('users.show')->with('user', $users);
     }
 
     /**
@@ -56,7 +72,9 @@ class UsersDataController extends Controller
      */
     public function edit($id)
     {
-        //
+      $user = User::find($id);
+      return view('users.edit')->with('user', $user);
+
     }
 
     /**
@@ -66,9 +84,22 @@ class UsersDataController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function update(Request $request, $id)
     {
-        //
+      $this->validate($request,[
+      'name' => 'required',
+      'email' => 'required',
+      'password' => 'required|string|min:6|confirmed',
+      ]);
+
+      $user = User::find($id);
+      $user->name = $request->input('name');
+      $user->email = $request->input('email');
+      $user->password = $request->input('password');
+      $user->save();
+      return redirect('/users')->with('success', 'User updated successfully');
+
     }
 
     /**
@@ -79,6 +110,8 @@ class UsersDataController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $user = User::find($id);
+      $user->delete();
+      return redirect('/users')->with('success', 'User Deleted');
     }
 }
