@@ -15,10 +15,9 @@ Route::get('/', 'UsersDataController@index')->name('users');
 
 
 Route::get('/users',"UsersDataController@index");
+Route::get('/products',"ProcductsController@index");
+Route::resource('products', 'ProcductsController');
 
-Route::get('/app', function () {
-    return view('welcome in my app');
-});
 
 Auth::routes();
 Route::resource('users', 'UsersDataController');

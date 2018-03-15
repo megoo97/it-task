@@ -18,13 +18,13 @@
           <td>{{$user->id}}</td>
           <td><a href="/users/{{$user->id}}">{{$user->name}}</a></td>
           <td>{{$user->email}}</td>
-          <td>
+          <td class="row">
             <a class="btn btn-info" href="/users/{{$user->id}}">View</a>
-            <a href="/users/{{$user->id}}/edit" class="btn btn-warning">Edit</a>
+            <a href="/users/{{$user->id}}/edit" style="margin-left:10px;" class="btn btn-warning">Edit</a>
             <a>
                 {!! Form::open(['action' => ['UsersDataController@destroy', $user->id], 'method' => 'POST'])!!}
                 {{Form::hidden('_method', 'DELETE')}}
-                {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
+                {{Form::submit('Delete', ['class' => 'btn btn-danger', 'style' => 'margin-left:10px;'])}}
                 {!! Form::close() !!}
             </a>
           </td>
